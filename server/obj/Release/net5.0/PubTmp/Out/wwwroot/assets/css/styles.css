@@ -1,0 +1,55 @@
+/*
+  You can add custom CSS rules or import files here.
+*/
+
+
+/* Import the Radzen CSS files */
+@import './styles-generated.css';
+
+ 
+#blazor-error-ui {
+  background: lightyellow;
+  bottom: 0;
+  box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+  display: none;
+  left: 0;
+  padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+}
+
+#blazor-error-ui .dismiss {
+  cursor: pointer;
+  position: absolute;
+  right: 0.75rem;
+  top: 0.5rem;
+}
+.rz-panel-menu {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 0;
+    overflow: auto;
+    color: #ffffff;
+    background-color: #598087;
+}
+.sidebar-toggle {
+    -webkit-appearance: none;
+    border: none;
+    padding: 0.8125rem;
+    margin: 0 1rem 0 0;
+    border-right: 1px solid #eaeef0;
+    background-color: #5d717b;
+    color: #fff;
+}
+ul.rz-profile-menu {
+    list-style: none;
+    margin-bottom: 0;
+    padding: 0.5625rem 1.25rem;
+    display: inline-block;
+    background-color: #598087;
+    border-left: 1px solid #598087;
+    position: relative;
+    z-index: 1;
+    color: whitesmoke;
+}

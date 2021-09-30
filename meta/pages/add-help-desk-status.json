@@ -1,0 +1,201 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "heading",
+          "name": "pageTitle",
+          "size": "H1",
+          "text": "Add Help Desk Status"
+        },
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Ticket Status",
+                              "component": "TicketStatus",
+                              "name": "TicketStatusLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 50,
+                              "type": "textbox",
+                              "name": "TicketStatus",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${helpdeskstatus.TicketStatus}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "TicketStatusRequiredValidator",
+                              "component": "TicketStatus",
+                              "text": "TicketStatus is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Ticket Status Desc",
+                              "component": "TicketStatusDesc",
+                              "name": "TicketStatusDescLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 150,
+                              "type": "textbox",
+                              "name": "TicketStatusDesc",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${helpdeskstatus.TicketStatusDesc}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "style": {
+                                "marginLeft": "1rem"
+                              },
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "path": "help-desk-statuses",
+                                    "type": "navigate"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to create new HelpDeskStatus!",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "authenticationconn.createHelpDeskStatus",
+                        "parameters": [
+                          {
+                            "name": "HelpDeskStatus",
+                            "value": "${helpdeskstatus}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "path": "help-desk-statuses",
+                            "type": "navigate"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "data": "${helpdeskstatus}",
+                  "visible": "${helpdeskstatus != null}",
+                  "itemType": "Testauth.Models.Authenticationconn.HelpDeskStatus"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "helpdeskstatus",
+        "type": "set",
+        "value": "new Testauth.Models.Authenticationconn.HelpDeskStatus(){}",
+        "valueType": "Testauth.Models.Authenticationconn.HelpDeskStatus"
+      }
+    ]
+  },
+  "name": "Add Help Desk Status",
+  "access": [
+    "Authenticated"
+  ],
+  "layout": "Main"
+}

@@ -1,0 +1,60 @@
+﻿@page "/services-lists"
+@layout MainLayout
+@inherits Testauth.Pages.ServicesListsComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Testauth.Models.Authenticationconn
+@using Testauth.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+@inject Microsoft.Extensions.Localization.IStringLocalizer<ServicesLists> L
+<RadzenContent Container="main">
+  <ChildContent>
+    <RadzenHeading Size="H1" Text="@L["pageTitle.Text"]">
+    </RadzenHeading>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="@L["button0.Text"]" Click="@Button0Click">
+        </RadzenButton>
+        <RadzenSplitButton Icon="get_app" style="margin-left: 10px; margin-bottom: 10px" Text="@L["splitbutton0.Text"]" Click="@Splitbutton0Click">
+          <ChildContent>
+            <RadzenSplitButtonItem Text="@L["splitbutton0.excel.Text"]" Value="xlsx">
+            </RadzenSplitButtonItem>
+            <RadzenSplitButtonItem Text="@L["splitbutton0.csv.Text"]" Value="csv">
+            </RadzenSplitButtonItem>
+          </ChildContent>
+        </RadzenSplitButton>
+        <RadzenTextBox Placeholder="@L["textbox0.Placeholder"]" style="display: block; margin-bottom: 10px; width: 100%" Name="Textbox0" @oninput="@(async(args) => {search = $"{args.Value}";await grid0.GoToPage(0);await grid0.Reload();})">
+        </RadzenTextBox>
+        <RadzenDataGrid @ref="grid0" AllowFiltering="true" FilterMode="FilterMode.Advanced" AllowPaging="true" AllowSorting="true" Data="@getServicesListsResult" Count="@getServicesListsCount" TItem="Testauth.Models.Authenticationconn.ServicesList" LoadData="@Grid0LoadData" RowSelect="@Grid0RowSelect">
+          <Columns>
+            <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.ServicesList" Property="ServiceID" Title="@L["grid0.ServiceID.Title"]">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.ServicesList" Property="ServiceDesc" Title="@L["grid0.ServiceDesc.Title"]">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.ServicesList" Property="ServiceDesc1" Title="@L["grid0.ServiceDesc1.Title"]">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.ServicesList" Property="AuditCC" Title="@L["grid0.AuditCC.Title"]">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.ServicesList" Property="assignTo" Title="@L["grid0.assignTo.Title"]">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.ServicesList" Property="ServiceCatgID" SortProperty="ServiceCatglist.ServiceCatgDesc" FilterProperty="ServiceCatglist.ServiceCatgDesc" Title="@L["grid0.ServiceCatgID.Title"]">
+              <Template Context="data">
+              @(data.ServiceCatglist?.ServiceCatgDesc)
+              </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.ServicesList" Filterable="false" Sortable="false" Width="70px" TextAlign="TextAlign.Center">
+              <Template Context="testauthModelsAuthenticationconnServicesList">
+                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>GridDeleteButtonClick(args, testauthModelsAuthenticationconnServicesList))" @onclick:stopPropagation="true">
+                </RadzenButton>
+              </Template>
+            </RadzenDataGridColumn>
+          </Columns>
+        </RadzenDataGrid>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

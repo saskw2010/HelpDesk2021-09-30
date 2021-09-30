@@ -1,0 +1,458 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "heading",
+          "name": "pageTitle",
+          "size": "H1",
+          "text": "Edit Help Desk Ticket Detail"
+        },
+        {
+          "components": [
+            {
+              "class": "col-md-9",
+              "components": [
+                {
+                  "name": "closeLabel",
+                  "style": {
+                    "fontWeight": "bold"
+                  },
+                  "text": "Item no longer available.",
+                  "type": "label",
+                  "visible": "${!canEdit}"
+                }
+              ],
+              "name": "col0",
+              "type": "col"
+            },
+            {
+              "class": "col-md-3",
+              "components": [
+                {
+                  "buttonStyle": "secondary",
+                  "events": {
+                    "click": [
+                      {
+                        "path": "help-desk-ticket-details",
+                        "type": "navigate"
+                      }
+                    ]
+                  },
+                  "icon": "",
+                  "name": "closeButton",
+                  "style": {
+                    "marginBottom": "20px"
+                  },
+                  "text": "Close",
+                  "type": "button",
+                  "visible": "${!canEdit}"
+                }
+              ],
+              "name": "col1",
+              "type": "col"
+            }
+          ],
+          "name": "row0",
+          "style": {},
+          "type": "row"
+        },
+        {
+          "components": [
+            {
+              "class": "col-md-9",
+              "components": [
+                {
+                  "name": "label0",
+                  "style": {
+                    "fontWeight": "bold"
+                  },
+                  "text": "Another user has made conflicting changes to one or more of the fields you have modified. Please reload.",
+                  "type": "label",
+                  "visible": "${hasChanges}"
+                }
+              ],
+              "name": "col0",
+              "type": "col"
+            },
+            {
+              "class": "col-md-3",
+              "components": [
+                {
+                  "buttonStyle": "secondary",
+                  "events": {
+                    "click": [
+                      {
+                        "code": "await this.Load()",
+                        "type": "execute"
+                      }
+                    ]
+                  },
+                  "icon": "autorenew",
+                  "name": "button0",
+                  "style": {
+                    "marginBottom": "20px"
+                  },
+                  "text": "Reload",
+                  "type": "button",
+                  "visible": "${hasChanges}"
+                }
+              ],
+              "name": "col1",
+              "type": "col"
+            }
+          ],
+          "name": "row0",
+          "style": {},
+          "type": "row"
+        },
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Help Desk Ticket",
+                              "component": "HelpDeskTicketId",
+                              "name": "HelpDeskTicketIdLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getHelpDeskTicketsForHelpDeskTicketIdResult}",
+                              "textProperty": "TicketGUID",
+                              "valueProperty": "Id",
+                              "placeholder": "Choose HelpDeskTicket",
+                              "valueType": "Int64",
+                              "showSearch": false,
+                              "count": "${getHelpDeskTicketsForHelpDeskTicketIdCount}",
+                              "value": "${helpdeskticketdetail.HelpDeskTicketId}",
+                              "type": "dropdown-datagrid",
+                              "name": "HelpDeskTicketId",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "selectedValue": "${getByHelpDeskTicketsForHelpDeskTicketIdResult}",
+                              "events": {
+                                "loadData": [
+                                  {
+                                    "name": "authenticationconn.getHelpDeskTickets",
+                                    "parameters": [
+                                      {
+                                        "name": "$top",
+                                        "value": "${event.top}"
+                                      },
+                                      {
+                                        "name": "$skip",
+                                        "value": "${event.skip}"
+                                      },
+                                      {
+                                        "name": "$orderby",
+                                        "value": "${event.orderby}"
+                                      },
+                                      {
+                                        "name": "$filter",
+                                        "value": "${event.filter}"
+                                      },
+                                      {
+                                        "name": "$count",
+                                        "value": "true"
+                                      }
+                                    ],
+                                    "then": [
+                                      {
+                                        "name": "getHelpDeskTicketsForHelpDeskTicketIdResult",
+                                        "type": "set",
+                                        "value": "${result.Value.AsODataEnumerable()}",
+                                        "valueType": "IEnumerable<Testauth.Models.Authenticationconn.HelpDeskTicket>"
+                                      },
+                                      {
+                                        "name": "getHelpDeskTicketsForHelpDeskTicketIdCount",
+                                        "type": "set",
+                                        "value": "result.Count"
+                                      }
+                                    ],
+                                    "type": "invoke"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "HelpDeskTicketIdRequiredValidator",
+                              "component": "HelpDeskTicketId",
+                              "text": "HelpDeskTicketId is required",
+                              "style": {
+                                "position": "absolute"
+                              },
+                              "defaultValue": "0"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Ticket Detail Date",
+                              "component": "TicketDetailDate",
+                              "name": "TicketDetailDateLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "DateTime",
+                              "dateFormat": "dd/MM/yyyy",
+                              "type": "datepicker",
+                              "name": "TicketDetailDate",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${helpdeskticketdetail.TicketDetailDate}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Ticket Description",
+                              "component": "TicketDescription",
+                              "name": "TicketDescriptionLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "type": "textbox",
+                              "name": "TicketDescription",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${helpdeskticketdetail.TicketDescription}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "TicketDescriptionRequiredValidator",
+                              "component": "TicketDescription",
+                              "text": "TicketDescription is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "style": {
+                                "marginLeft": "1rem"
+                              },
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "path": "help-desk-ticket-details",
+                                    "type": "navigate"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to update HelpDeskTicketDetail",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "authenticationconn.updateHelpDeskTicketDetail",
+                        "parameters": [
+                          {
+                            "name": "Id",
+                            "value": "Convert.ChangeType(${parameters.Id}, Type.GetTypeCode(typeof(Int64)))"
+                          },
+                          {
+                            "name": "HelpDeskTicketDetail",
+                            "value": "${helpdeskticketdetail}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "path": "help-desk-ticket-details",
+                            "type": "navigate",
+                            "condition": "result.StatusCode != System.Net.HttpStatusCode.PreconditionFailed"
+                          },
+                          {
+                            "name": "hasChanges",
+                            "type": "set",
+                            "value": "result.StatusCode == System.Net.HttpStatusCode.PreconditionFailed",
+                            "valueType": "bool"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "itemType": "Testauth.Models.Authenticationconn.HelpDeskTicketDetail",
+                  "data": "${helpdeskticketdetail}",
+                  "visible": "${helpdeskticketdetail != null && canEdit}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "hasChanges",
+        "type": "set",
+        "value": "false",
+        "valueType": "bool"
+      },
+      {
+        "name": "canEdit",
+        "type": "set",
+        "value": "true",
+        "valueType": "bool"
+      },
+      {
+        "name": "authenticationconn.getHelpDeskTicketDetailById",
+        "parameters": [
+          {
+            "name": "Id",
+            "value": "Convert.ChangeType(${parameters.Id}, Type.GetTypeCode(typeof(Int64)))"
+          }
+        ],
+        "then": [
+          {
+            "name": "helpdeskticketdetail",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "Testauth.Models.Authenticationconn.HelpDeskTicketDetail"
+          },
+          {
+            "name": "canEdit",
+            "type": "set",
+            "value": "result != null",
+            "valueType": "bool"
+          },
+          {
+            "name": "authenticationconn.getHelpDeskTicketById",
+            "parameters": [
+              {
+                "name": "Id",
+                "value": "${this.helpdeskticketdetail.HelpDeskTicketId}"
+              }
+            ],
+            "then": [
+              {
+                "name": "getByHelpDeskTicketsForHelpDeskTicketIdResult",
+                "type": "set",
+                "value": "${result}",
+                "valueType": "Testauth.Models.Authenticationconn.HelpDeskTicket"
+              }
+            ],
+            "condition": "this.helpdeskticketdetail.HelpDeskTicketId != null",
+            "type": "invoke"
+          }
+        ],
+        "error": [],
+        "type": "invoke"
+      }
+    ]
+  },
+  "name": "Edit Help Desk Ticket Detail",
+  "access": [
+    "Authenticated"
+  ],
+  "layout": "Main"
+}

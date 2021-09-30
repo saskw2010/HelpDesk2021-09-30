@@ -1,0 +1,191 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "heading",
+          "name": "pageTitle",
+          "size": "H1",
+          "text": "Add Service Catglist"
+        },
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Service Catg Desc",
+                              "component": "ServiceCatgDesc",
+                              "name": "ServiceCatgDescLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 250,
+                              "type": "textbox",
+                              "name": "ServiceCatgDesc",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${servicecatglist.ServiceCatgDesc}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Service Catg Desc 1",
+                              "component": "ServiceCatgDesc1",
+                              "name": "ServiceCatgDesc1Label",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 250,
+                              "type": "textbox",
+                              "name": "ServiceCatgDesc1",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${servicecatglist.ServiceCatgDesc1}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "style": {
+                                "marginLeft": "1rem"
+                              },
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "path": "service-catglists",
+                                    "type": "navigate"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to create new ServiceCatglist!",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "authenticationconn.createServiceCatglist",
+                        "parameters": [
+                          {
+                            "name": "ServiceCatglist",
+                            "value": "${servicecatglist}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "path": "service-catglists",
+                            "type": "navigate"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "data": "${servicecatglist}",
+                  "visible": "${servicecatglist != null}",
+                  "itemType": "Testauth.Models.Authenticationconn.ServiceCatglist"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "servicecatglist",
+        "type": "set",
+        "value": "new Testauth.Models.Authenticationconn.ServiceCatglist(){}",
+        "valueType": "Testauth.Models.Authenticationconn.ServiceCatglist"
+      }
+    ]
+  },
+  "name": "Add Service Catglist",
+  "access": [
+    "Authenticated"
+  ],
+  "layout": "Main"
+}

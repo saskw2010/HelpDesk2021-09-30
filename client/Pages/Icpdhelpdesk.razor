@@ -1,0 +1,32 @@
+﻿@page "/"
+@page "/icpdhelpdesk"
+@layout WidelayoutLayout
+@inherits Testauth.Pages.IcpdhelpdeskComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Testauth.Models.Authenticationconn
+@using Testauth.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Icpdhelpdesk> L
+<RadzenContent Container="main">
+  <ChildContent>
+    <RadzenHeading Size="H1" style="background-color: #5d717b; text-align: center" Text="@L["pageTitle.Text"]">
+    </RadzenHeading>
+    <RadzenCard style="background-color: #5d717b; display: inline-block; float: left; height: 206px; margin-left: 16px; margin-top: 16px; position: relative; text-align: center; vertical-align: middle; width: 333px">
+      <ChildContent>
+        <RadzenButton ButtonStyle="ButtonStyle.Info" ButtonType="ButtonType.Submit" Icon="sticky_note_2" style="border-radius: 4px; display: inline-block; float: left; height: 93px; position: relative; text-align: center; top: 1px; visibility: visible; width: 290px" Text="@L["button2.Text"]" Click="@Button2Click">
+        </RadzenButton>
+      </ChildContent>
+    </RadzenCard>
+    <RadzenCard style="background-color: #5d717b; float: left; height: 206px; margin-left: 26px; margin-top: 16px; position: relative; text-align: center; vertical-align: middle; width: 333px">
+      <ChildContent>
+        <RadzenButton ButtonStyle="ButtonStyle.Success" ButtonType="ButtonType.Submit" Icon="new_releases" style="display: inline-block; float: left; height: 93px; position: relative; text-align: center; top: 2px; width: 290px" Text="@L["button1.Text"]" Click="@Button1Click">
+        </RadzenButton>
+      </ChildContent>
+    </RadzenCard>
+  </ChildContent>
+</RadzenContent>

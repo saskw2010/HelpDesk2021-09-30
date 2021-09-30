@@ -1,0 +1,5 @@
+﻿<SatelliteAssembly>
+  <Assembly Name="obj\Debug\net5.0\ar-KW\Testauth.Client.resources.dll" Culture="ar-KW" DestinationSubDirectory="ar-KW\" />
+  <Assembly Name="obj\Debug\net5.0\en-US\Testauth.Client.resources.dll" Culture="en-US" DestinationSubDirectory="en-US\" />
+  <Assembly Name="obj\Debug\net5.0\fr-CA\Testauth.Client.resources.dll" Culture="fr-CA" DestinationSubDirectory="fr-CA\" />
+</SatelliteAssembly>

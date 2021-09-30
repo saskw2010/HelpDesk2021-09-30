@@ -1,0 +1,87 @@
+﻿@page "/add-services-list"
+@layout MainLayout
+@inherits Testauth.Pages.AddServicesListComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Testauth.Models.Authenticationconn
+@using Testauth.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+@inject Microsoft.Extensions.Localization.IStringLocalizer<AddServicesList> L
+<RadzenContent Container="main">
+  <ChildContent>
+    <RadzenHeading Size="H1" Text="@L["pageTitle.Text"]">
+    </RadzenHeading>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenTemplateForm Data="@serviceslist" Visible="@(serviceslist != null)" TItem="Testauth.Models.Authenticationconn.ServicesList" Submit="@Form0Submit">
+          <ChildContent>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="@L["ServiceDescLabel.Text"]" Component="ServiceDesc" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenTextBox MaxLength="250" style="width: 100%" @bind-Value="@(serviceslist.ServiceDesc)" Name="ServiceDesc">
+                </RadzenTextBox>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="@L["ServiceDesc1Label.Text"]" Component="ServiceDesc1" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenTextBox MaxLength="250" style="width: 100%" @bind-Value="@(serviceslist.ServiceDesc1)" Name="ServiceDesc1">
+                </RadzenTextBox>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="@L["AuditCCLabel.Text"]" Component="AuditCC" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenTextBox MaxLength="250" style="width: 100%" @bind-Value="@(serviceslist.AuditCC)" Name="AuditCC">
+                </RadzenTextBox>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="@L["assignToLabel.Text"]" Component="assignTo" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenTextBox MaxLength="250" style="width: 100%" @bind-Value="@(serviceslist.assignTo)" Name="AssignTo">
+                </RadzenTextBox>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="@L["ServiceCatgIDLabel.Text"]" Component="ServiceCatgID" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenDropDownDataGrid Data="@getServiceCatglistsForServiceCatgIDResult" TextProperty="ServiceCatgDesc" ValueProperty="ServiceCatgID" Placeholder="@L["ServiceCatgID.Placeholder"]" ShowSearch="false" Count="@getServiceCatglistsForServiceCatgIDCount" style="display: block; width: 100%" @bind-Value="@(serviceslist.ServiceCatgID)" Name="ServiceCatgID" LoadData="@ServiceCatgIdLoadData">
+                </RadzenDropDownDataGrid>
+                <RadzenRequiredValidator Component="ServiceCatgID" Text="@L["ServiceCatgIDRequiredValidator.Text"]" style="position: absolute" DefaultValue="0">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col offset-sm-3">
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="@L["button1.Text"]" ButtonStyle="ButtonStyle.Primary">
+                </RadzenButton>
+                <RadzenButton ButtonStyle="ButtonStyle.Light" style="margin-left: 1rem" Text="@L["button2.Text"]" Click="@Button2Click">
+                </RadzenButton>
+              </div>
+            </div>
+          </ChildContent>
+        </RadzenTemplateForm>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

@@ -1,0 +1,209 @@
+{
+  "components": [
+    {
+      "components": [
+        {
+          "class": "justify-content-start align-items-center",
+          "components": [
+            {
+              "class": "col-6 d-flex align-items-center",
+              "components": [
+                {
+                  "events": {
+                    "click": [
+                      {
+                        "code": "await InvokeAsync(() => { sidebar0.Toggle(); });",
+                        "type": "execute"
+                      },
+                      {
+                        "code": "await InvokeAsync(() => { body0.Toggle(); });",
+                        "type": "execute"
+                      }
+                    ]
+                  },
+                  "name": "sidebar-toggle0",
+                  "style": {
+                    "height": "52px",
+                    "marginTop": "-2px"
+                  },
+                  "type": "sidebar-toggle"
+                },
+                {
+                  "name": "label0",
+                  "style": {
+                    "color": "#f2f4f5"
+                  },
+                  "text": "CPD HELP DESK",
+                  "type": "label"
+                }
+              ],
+              "name": "leftCol",
+              "style": {
+                "backgroundColor": "#598087",
+                "borderRadius": "1px",
+                "display": "inline-block",
+                "float": "none",
+                "height": "49px",
+                "top": "1px"
+              },
+              "type": "col"
+            },
+            {
+              "class": "col-6 text-right",
+              "components": [
+                {
+                  "data": "@(new[] { new { Text=\"Arabic - Kuwait\", Value=\"ar-KW\" },new { Text=\"English - United States\", Value=\"en-US\" },new { Text=\"French - Canada\", Value=\"fr-CA\" }})",
+                  "events": {
+                    "change": [
+                      {
+                        "code": "var redirect = new Uri(UriHelper.Uri).GetComponents(UriComponents.PathAndQuery | UriComponents.Fragment, UriFormat.UriEscaped);",
+                        "type": "execute"
+                      },
+                      {
+                        "code": "var query = $\"?culture={Uri.EscapeDataString((string)args)}&redirectUri={redirect}\";",
+                        "type": "execute"
+                      },
+                      {
+                        "code": "UriHelper.NavigateTo(\"Culture/SetCulture\" + query, forceLoad: true);",
+                        "type": "execute"
+                      }
+                    ]
+                  },
+                  "style": {
+                    "display": "inline-block",
+                    "height": "39px",
+                    "marginTop": "1px"
+                  },
+                  "textProperty": "Text",
+                  "type": "dropdown",
+                  "value": "${Culture}",
+                  "valueProperty": "Value",
+                  "valueType": "string"
+                },
+                {
+                  "attributes": [
+                    {
+                      "name": "Top",
+                      "value": "0px"
+                    }
+                  ],
+                  "name": "profilemenu0",
+                  "style": {
+                    "display": "inline-block",
+                    "float": "right",
+                    "height": "39px",
+                    "marginTop": "1px",
+                    "width": "200px"
+                  },
+                  "template": [
+                    {
+                      "text": "${Security.User?.Name}",
+                      "type": "label"
+                    }
+                  ],
+                  "type": "profilemenu",
+                  "visible": "${Security.IsAuthenticated()}"
+                }
+              ],
+              "name": "rightCol",
+              "style": {
+                "backgroundColor": "#598087",
+                "borderRadius": "1px",
+                "display": "inline-block",
+                "float": "none",
+                "height": "49px",
+                "top": "1px",
+                "verticalAlign": "baseline"
+              },
+              "type": "col"
+            }
+          ],
+          "name": "headerRow",
+          "style": {
+            "backgroundColor": "#598087"
+          },
+          "type": "row"
+        }
+      ],
+      "name": "header0",
+      "type": "header"
+    },
+    {
+      "components": [
+        {
+          "name": "main",
+          "type": "content-container"
+        }
+      ],
+      "name": "body0",
+      "type": "body"
+    },
+    {
+      "components": [
+        {
+          "items": [
+            {
+              "icon": "add_task",
+              "path": "i-help-desk-tickets",
+              "text": "My Tickets",
+              "visible": true
+            },
+            {
+              "icon": "home",
+              "path": "icpdhelpdesk",
+              "text": "My Home ",
+              "visible": true
+            },
+            {
+              "icon": "admin_panel_settings",
+              "path": "services-lists",
+              "text": "administrator"
+            },
+            {
+              "path": "i-help-desk-ticketmasterdetails",
+              "text": "Ihelpmasterdetails"
+            },
+            {
+              "path": "i-help-desk-ticketmasterdetailsperuser",
+              "text": "My Tickets History"
+            }
+          ],
+          "name": "panelmenu0",
+          "style": {
+            "borderRadius": "1px",
+            "height": "100%"
+          },
+          "type": "panelmenu"
+        }
+      ],
+      "name": "sidebar0",
+      "type": "sidebar"
+    },
+    {
+      "components": [
+        {
+          "name": "footerText",
+          "text": "testauth, Copyright Ⓒ 2021",
+          "type": "label"
+        }
+      ],
+      "name": "footer0",
+      "type": "footer"
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "Culture",
+        "type": "set",
+        "value": "\"\"",
+        "valueType": "string"
+      },
+      {
+        "code": "Culture = await JSRuntime.InvokeAsync<string>(\"Radzen.getCulture\");",
+        "type": "execute"
+      }
+    ]
+  },
+  "name": "widelayout"
+}

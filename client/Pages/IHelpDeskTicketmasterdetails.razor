@@ -1,0 +1,77 @@
+﻿@page "/i-help-desk-ticketmasterdetails"
+@layout MainLayout
+@inherits Testauth.Pages.IHelpDeskTicketmasterdetailsComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Testauth.Models.Authenticationconn
+@using Testauth.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+@inject Microsoft.Extensions.Localization.IStringLocalizer<IHelpDeskTicketmasterdetails> L
+<RadzenContent Container="main">
+  <ChildContent>
+    <RadzenHeading Size="H1" Text="@L["pageTitle.Text"]">
+    </RadzenHeading>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenTextBox Placeholder="@L["textbox0.Placeholder"]" style="display: block; margin-bottom: 10px; width: 100%" Name="Textbox0" @oninput="@(async(args) => {search = $"{args.Value}";await grid0.GoToPage(0);await grid0.Reload();})">
+        </RadzenTextBox>
+        <RadzenDataGrid @ref="grid0" AllowFiltering="false" AllowGrouping="false" AllowPaging="true" AllowSorting="true" AllowVirtualization="false" Count="@getHelpDeskTicketsCount" Data="@getHelpDeskTicketsResult" ExpandMode="DataGridExpandMode.Multiple" FilterMode="FilterMode.Advanced" TItem="Testauth.Models.Authenticationconn.HelpDeskTicket" SelectionMode="DataGridSelectionMode.Multiple" LoadData="@Grid0LoadData" RowExpand="@Grid0RowExpand">
+          <Columns>
+            <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.HelpDeskTicket" Property="TicketDescription" Title="@L["grid0.TicketDescription.Title"]">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.HelpDeskTicket" FilterProperty="HelpDeskStatus.TicketStatusDesc" GroupProperty="HelpDeskStatus.TicketStatusDesc" Property="TicketStatus" SortProperty="HelpDeskStatus.TicketStatusDesc" Title="@L["grid0.TicketStatus.Title"]">
+              <Template Context="data">
+              @(data.HelpDeskStatus?.TicketStatusDesc)
+              </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.HelpDeskTicket" FormatString="{0:d}" Property="TicketDate" Title="@L["grid0.TicketDate.Title"]">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.HelpDeskTicket" FilterProperty="LocationList.locationDesc" GroupProperty="LocationList.locationDesc" Property="locationID" SortProperty="LocationList.locationDesc" Title="@L["grid0.locationID.Title"]">
+              <Template Context="data">
+              @(data.LocationList?.locationDesc)
+              </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.HelpDeskTicket" FilterProperty="ServiceCatglist.ServiceCatgDesc" GroupProperty="ServiceCatglist.ServiceCatgDesc" Property="ServiceCatgID" SortProperty="ServiceCatglist.ServiceCatgDesc" Title="@L["grid0.ServiceCatgID.Title"]">
+              <Template Context="data">
+              @(data.ServiceCatglist?.ServiceCatgDesc)
+              </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.HelpDeskTicket" FilterProperty="ServicesList.ServiceDesc" GroupProperty="ServicesList.ServiceDesc" Property="ServiceID" SortProperty="ServicesList.ServiceDesc" Title="@L["grid0.ServiceID.Title"]">
+              <Template Context="data">
+              @(data.ServicesList?.ServiceDesc)
+              </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.HelpDeskTicket" Property="Id" Title="@L["grid0.Id.Title"]">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.HelpDeskTicket" Property="TicketRequesterEmail" Title="@L["grid0.TicketRequesterEmail.Title"]">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.HelpDeskTicket" Property="TicketRequesterUser" Title="@L["grid0.TicketRequesterUser.Title"]">
+            </RadzenDataGridColumn>
+          </Columns>
+          <Template Context="testauthModelsAuthenticationconnHelpDeskTicket">
+            <RadzenDataGrid @ref="grid1" AllowFiltering="false" AllowPaging="true" AllowSorting="true" ColumnWidth="auto" Data="@(testauthModelsAuthenticationconnHelpDeskTicket.HelpDeskTicketDetails)" FilterMode="FilterMode.Advanced" TItem="Testauth.Models.Authenticationconn.HelpDeskTicketDetail" style="height: 754px">
+              <Columns>
+                <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.HelpDeskTicketDetail" FormatString="{0:d}" Frozen="false" Groupable="false" Property="TicketDetailDate" Reorderable="false" Resizable="true" Title="@L["grid1.TicketDetailDate.Title"]" Width="90px">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.HelpDeskTicketDetail" Property="TicketDescription" Title="@L["grid1.TicketDescription.Title"]">
+                  <Template Context="testauthModelsAuthenticationconnHelpDeskTicketDetail">
+                    <RadzenHtmlEditor Disabled="true" style="height: 289px" UploadUrl="upload/image" @bind-Value="@(testauthModelsAuthenticationconnHelpDeskTicketDetail.TicketDescription)" Name="HtmlEditor0">
+                      <ChildContent>
+                        <RadzenHtmlEditorBold>
+                        </RadzenHtmlEditorBold>
+                      </ChildContent>
+                    </RadzenHtmlEditor>
+                  </Template>
+                </RadzenDataGridColumn>
+              </Columns>
+            </RadzenDataGrid>
+          </Template>
+        </RadzenDataGrid>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

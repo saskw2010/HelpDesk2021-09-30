@@ -1,0 +1,122 @@
+{
+  "cssFiles": [],
+  "dataSources": [
+    "authenticationconn"
+  ],
+  "generator": "@radzen/blazor-server",
+  "https": true,
+  "ignore": [
+    "Customfile"
+  ],
+  "javaScriptFiles": [],
+  "layouts": [
+    "Login",
+    "Main",
+    "widelayout"
+  ],
+  "localization": {
+    "cultures": [
+      {
+        "text": "Arabic - Kuwait",
+        "value": "ar-KW"
+      },
+      {
+        "text": "English - United States",
+        "value": "en-US"
+      },
+      {
+        "text": "French - Canada",
+        "value": "fr-CA"
+      }
+    ],
+    "defaultCulture": {
+      "text": "English - United States",
+      "value": "en-US"
+    }
+  },
+  "logo": "",
+  "name": "testauth",
+  "namespaces": [],
+  "navigation": [
+    "Device Codes",
+    "Help Desk Tickets",
+    "Help Desk Ticket Details",
+    "Location Lists",
+    "Persisted Grants",
+    "Service Catglists",
+    "Services Lists",
+    "Ticket Requester Users Lists",
+    "IHelp Desk Tickets",
+    "ICPDHELPDESK",
+    "IAddNewTicket",
+    "Help Desk Statuses",
+    "HelpDeskTicketherarchy",
+    "HelpDeskTicketwithform",
+    "IHelpDeskTicketwithdetails",
+    "IHelpDeskTicketmasterdetails",
+    "IHelpDeskTicketmasterdetailsperuser"
+  ],
+  "pages": [
+    "Device Codes",
+    "Add Device Code",
+    "Edit Device Code",
+    "Help Desk Tickets",
+    "Add Help Desk Ticket",
+    "Edit Help Desk Ticket",
+    "Help Desk Ticket Details",
+    "Add Help Desk Ticket Detail",
+    "Edit Help Desk Ticket Detail",
+    "Location Lists",
+    "Add Location List",
+    "Edit Location List",
+    "Persisted Grants",
+    "Add Persisted Grant",
+    "Edit Persisted Grant",
+    "Service Catglists",
+    "Add Service Catglist",
+    "Edit Service Catglist",
+    "Services Lists",
+    "Add Services List",
+    "Edit Services List",
+    "Ticket Requester Users Lists",
+    "Add Ticket Requester Users List",
+    "Edit Ticket Requester Users List",
+    "IAddNewTicket",
+    "IHelp Desk Tickets",
+    "ICPDHELPDESK",
+    "Help Desk Statuses",
+    "Add Help Desk Status",
+    "Edit Help Desk Status",
+    "IEdit Help Desk Ticket",
+    "HelpDeskTicketherarchy",
+    "Add HelpDeskTicketherarchy",
+    "Edit HelpDeskTicketherarchy",
+    "Unauthorized",
+    "HelpDeskTicketwithform",
+    "IHelpDeskTicketwithdetails",
+    "Add IHelpDeskTicketwithdetails",
+    "Edit I Help Desk Ticketwithdetails",
+    "IHelpDeskTicketmasterdetails",
+    "IHelpDeskTicketmasterdetailsperuser"
+  ],
+  "port": 8000,
+  "pwa": true,
+  "security": {
+    "autoGeneratePages": true,
+    "duration": 5,
+    "layout": "Main",
+    "loginLayout": "Login",
+    "loginPage": "Login",
+    "overwriteExistingPages": false,
+    "provider": "windows"
+  },
+  "serverLang": "cs",
+  "serverPort": 5000,
+  "serverProject": true,
+  "serverVersion": "5",
+  "startPage": "ICPDHELPDESK",
+  "theme": "humanistic",
+  "themeSettings": null,
+  "title": "testauth",
+  "wasm": true
+}

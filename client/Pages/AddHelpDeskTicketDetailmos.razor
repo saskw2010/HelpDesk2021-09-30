@@ -1,0 +1,68 @@
+﻿@page "/add-help-desk-ticket-detailmos"
+@page "/add-help-desk-ticket-detailmos/{HelpDeskTicketIdpar}"
+    
+@layout WidelayoutLayout
+@inherits Testauth.Pages.AddHelpDeskTicketDetailmosComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Testauth.Models.Authenticationconn
+@using Testauth.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+@inject Microsoft.Extensions.Localization.IStringLocalizer<AddHelpDeskTicketDetailmos> L
+<RadzenContent Container="main">
+    <ChildContent>
+        <div class="row">
+            <div class="col-md-12">
+                <RadzenTemplateForm Data="@helpdeskticketdetail" TItem="Testauth.Models.Authenticationconn.HelpDeskTicketDetail" Visible="@(helpdeskticketdetail != null)" Submit="@Form0Submit">
+                    <ChildContent>
+                        <div style="margin-bottom: 1rem" class="row">
+                            <div class="col-md-3">
+                                <RadzenLabel Component="HelpDeskTicketId" style="width: 100%" Text="@L["HelpDeskTicketIdLabel.Text"]">
+                                </RadzenLabel>
+                            </div>
+                            <div class="col-md-9">
+                                <RadzenDropDownDataGrid Count="@getHelpDeskTicketsForHelpDeskTicketIdCount" Data="@getHelpDeskTicketsForHelpDeskTicketIdResult" Disabled="true" Placeholder="@L["HelpDeskTicketId.Placeholder"]" ShowSearch="false" style="display: block; width: 100%" TextProperty="TicketGUID" @bind-Value="@(helpdeskticketdetail.HelpDeskTicketId)" ValueProperty="Id" Name="HelpDeskTicketId" LoadData="@HelpDeskTicketIdLoadData">
+                                </RadzenDropDownDataGrid>
+                                
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="row">
+                            <div class="col-md-3">
+                                <RadzenLabel Component="TicketDetailDate" style="width: 100%" Text="@L["TicketDetailDateLabel.Text"]">
+                                </RadzenLabel>
+                            </div>
+                            <div class="col-md-9">
+                                <RadzenDatePicker style="width: 100%" @bind-Value="@(helpdeskticketdetail.TicketDetailDate)" Name="TicketDetailDate">
+                                </RadzenDatePicker>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem" class="row">
+                            <div class="col-md-3">
+                                <RadzenLabel Component="TicketDescription" style="width: 100%" Text="@L["TicketDescriptionLabel.Text"]">
+                                </RadzenLabel>
+                            </div>
+                            <div class="col-md-9">
+                                <RadzenTextBox style="display: block; height: 329px; width: 100%" @bind-Value="@(helpdeskticketdetail.TicketDescription)" Name="TicketDescription">
+                                </RadzenTextBox>
+                                <RadzenRequiredValidator Component="TicketDescription" style="position: absolute" Text="@L["TicketDescriptionRequiredValidator.Text"]">
+                                </RadzenRequiredValidator>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col offset-sm-3">
+                                <RadzenButton ButtonStyle="ButtonStyle.Primary" ButtonType="ButtonType.Submit" Icon="save" Text="@L["button1.Text"]">
+                                </RadzenButton>
+                                <RadzenButton ButtonStyle="ButtonStyle.Light" style="margin-left: 1rem" Text="@L["button2.Text"]" Click="@Button2Click">
+                                </RadzenButton>
+                            </div>
+                        </div>
+                    </ChildContent>
+                </RadzenTemplateForm>
+            </div>
+        </div>
+    </ChildContent>
+</RadzenContent>

@@ -1,0 +1,59 @@
+﻿@page "/device-codes"
+@layout MainLayout
+@inherits Testauth.Pages.DeviceCodesComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Testauth.Models.Authenticationconn
+@using Testauth.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+@inject Microsoft.Extensions.Localization.IStringLocalizer<DeviceCodes> L
+<RadzenContent Container="main">
+  <ChildContent>
+    <RadzenHeading Size="H1" Text="@L["pageTitle.Text"]">
+    </RadzenHeading>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="@L["button0.Text"]" Click="@Button0Click">
+        </RadzenButton>
+        <RadzenSplitButton Icon="get_app" style="margin-left: 10px; margin-bottom: 10px" Text="@L["splitbutton0.Text"]" Click="@Splitbutton0Click">
+          <ChildContent>
+            <RadzenSplitButtonItem Text="@L["splitbutton0.excel.Text"]" Value="xlsx">
+            </RadzenSplitButtonItem>
+            <RadzenSplitButtonItem Text="@L["splitbutton0.csv.Text"]" Value="csv">
+            </RadzenSplitButtonItem>
+          </ChildContent>
+        </RadzenSplitButton>
+        <RadzenTextBox Placeholder="@L["textbox0.Placeholder"]" style="display: block; margin-bottom: 10px; width: 100%" Name="Textbox0" @oninput="@(async(args) => {search = $"{args.Value}";await grid0.GoToPage(0);await grid0.Reload();})">
+        </RadzenTextBox>
+        <RadzenDataGrid @ref="grid0" AllowFiltering="true" FilterMode="FilterMode.Advanced" AllowPaging="true" AllowSorting="true" Data="@getDeviceCodesResult" Count="@getDeviceCodesCount" TItem="Testauth.Models.Authenticationconn.DeviceCode" LoadData="@Grid0LoadData" RowSelect="@Grid0RowSelect">
+          <Columns>
+            <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.DeviceCode" Property="UserCode" Title="@L["grid0.UserCode.Title"]">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.DeviceCode" Property="DeviceCode1" Title="@L["grid0.DeviceCode1.Title"]">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.DeviceCode" Property="SubjectId" Title="@L["grid0.SubjectId.Title"]">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.DeviceCode" Property="ClientId" Title="@L["grid0.ClientId.Title"]">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.DeviceCode" Property="CreationTime" FormatString="{0:dd/MM/yyyy}" Title="@L["grid0.CreationTime.Title"]">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.DeviceCode" Property="Expiration" FormatString="{0:dd/MM/yyyy}" Title="@L["grid0.Expiration.Title"]">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.DeviceCode" Property="Data" Title="@L["grid0.Data.Title"]">
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="Testauth.Models.Authenticationconn.DeviceCode" Filterable="false" Sortable="false" Width="70px" TextAlign="TextAlign.Center">
+              <Template Context="testauthModelsAuthenticationconnDeviceCode">
+                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>GridDeleteButtonClick(args, testauthModelsAuthenticationconnDeviceCode))" @onclick:stopPropagation="true">
+                </RadzenButton>
+              </Template>
+            </RadzenDataGridColumn>
+          </Columns>
+        </RadzenDataGrid>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

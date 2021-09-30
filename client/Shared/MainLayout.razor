@@ -1,0 +1,95 @@
+﻿@inherits Testauth.Layouts.MainLayoutComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Testauth.Models.Authenticationconn
+@using Testauth.Models
+@inject Microsoft.Extensions.Localization.IStringLocalizer<MainLayout> L
+<RadzenDialog />
+<RadzenNotification />
+<RadzenTooltip />
+<RadzenContextMenu />
+
+<RadzenHeader>
+  <ChildContent>
+    <div class="row justify-content-start align-items-center">
+      <div class="col-6 d-flex align-items-center">
+        <RadzenSidebarToggle Click="@SidebarToggle0Click">
+        </RadzenSidebarToggle>
+        <RadzenLabel Text="@L["label0.Text"]">
+        </RadzenLabel>
+      </div>
+      <div class="col-6 text-right">
+        <RadzenDropDown Data="@(new[] { new { Text="Arabic - Kuwait", Value="ar-KW" },new { Text="English - United States", Value="en-US" },new { Text="French - Canada", Value="fr-CA" }})" TextProperty="Text" @bind-Value="@Culture" ValueProperty="Value" Name="Dropdown1" Change="@Dropdown1Change">
+        </RadzenDropDown>
+        <RadzenProfileMenu Visible="@(Security.IsAuthenticated())" Click="@Profilemenu0Click">
+          <ChildContent>
+            <RadzenProfileMenuItem Text="@L["profilemenu0.logout.Text"]" Value="Logout" Icon="power_settings_new">
+            </RadzenProfileMenuItem>
+          </ChildContent>
+          <Template>
+            <RadzenLabel Text="@($"{(Security.User?.Name)}")">
+            </RadzenLabel>
+          </Template>
+        </RadzenProfileMenu>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenHeader>
+<RadzenBody @ref="body0">
+  <ChildContent>
+    <RadzenContentContainer Name="main">
+    @Body
+    </RadzenContentContainer>
+  </ChildContent>
+</RadzenBody>
+<RadzenSidebar @ref="sidebar0">
+  <ChildContent>
+    <RadzenPanelMenu style="display: block; height: 100%">
+      <ChildContent>
+        <RadzenPanelMenuItem Icon="home" Path="icpdhelpdesk" Text="@L["panelmenu0.icpdhelpdesk.Text"]">
+        </RadzenPanelMenuItem>
+        <RadzenPanelMenuItem Path="help-desk-tickets" Text="@L["panelmenu0.help-desk-tickets.Text"]">
+        </RadzenPanelMenuItem>
+        <RadzenPanelMenuItem Path="help-desk-ticket-details" Text="@L["panelmenu0.help-desk-ticket-details.Text"]">
+        </RadzenPanelMenuItem>
+        <RadzenPanelMenuItem Path="i-help-desk-tickets" Text="@L["panelmenu0.i-help-desk-tickets.Text"]">
+        </RadzenPanelMenuItem>
+        <RadzenPanelMenuItem Icon="add_task" Path="i-add-new-ticket" Text="@L["panelmenu0.i-add-new-ticket.Text"]">
+        </RadzenPanelMenuItem>
+        <RadzenPanelMenuItem Path="i-help-desk-ticketwithdetails" Text="@L["panelmenu0.i-help-desk-ticketwithdetails.Text"]">
+        </RadzenPanelMenuItem>
+        <RadzenPanelMenuItem Path="help-desk-ticketherarchy" Text="@L["panelmenu0.help-desk-ticketherarchy.Text"]" Visible="@Security.IsInRole(new string[]{"Authenticated"})">
+        </RadzenPanelMenuItem>
+        <RadzenPanelMenuItem Path="help-desk-ticketwithform" Text="@L["panelmenu0.help-desk-ticketwithform.Text"]">
+        </RadzenPanelMenuItem>
+        <RadzenPanelMenuItem Path="ticket-requester-users-lists" Text="@L["panelmenu0.ticket-requester-users-lists.Text"]">
+        </RadzenPanelMenuItem>
+        <RadzenPanelMenuItem Path="help-desk-ticket-detailmos" Text="@L["panelmenu0.help-desk-ticket-detailmos.Text"]">
+        </RadzenPanelMenuItem>
+        <RadzenPanelMenuItem Text="@L["panelmenu0.adminLists.Text"]">
+          <ChildContent>
+            <RadzenPanelMenuItem Path="service-catglists" Text="@L["service-catglists.Text"]">
+            </RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Path="services-lists" Text="@L["services-lists.Text"]">
+            </RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Path="location-lists" Text="@L["location-lists.Text"]">
+            </RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Path="device-codes" Text="@L["device-codes.Text"]">
+            </RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Path="persisted-grants" Text="@L["persisted-grants.Text"]">
+            </RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Path="help-desk-statuses" Text="@L["help-desk-statuses.Text"]">
+            </RadzenPanelMenuItem>
+          </ChildContent>
+        </RadzenPanelMenuItem>
+      </ChildContent>
+    </RadzenPanelMenu>
+  </ChildContent>
+</RadzenSidebar>
+<RadzenFooter>
+  <ChildContent>
+    <RadzenLabel Text="@L["footerText.Text"]">
+    </RadzenLabel>
+  </ChildContent>
+</RadzenFooter>

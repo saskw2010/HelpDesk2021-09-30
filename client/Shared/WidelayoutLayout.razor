@@ -1,0 +1,69 @@
+﻿@inherits Testauth.Layouts.WidelayoutLayoutComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Testauth.Models.Authenticationconn
+@using Testauth.Models
+@inject Microsoft.Extensions.Localization.IStringLocalizer<WidelayoutLayout> L
+<RadzenDialog />
+<RadzenNotification />
+<RadzenTooltip />
+<RadzenContextMenu />
+
+<RadzenHeader>
+  <ChildContent>
+    <div class="row justify-content-start align-items-center" style="background-color: #598087">
+      <div class="col-6 d-flex align-items-center" style="background-color: #598087; border-radius: 1px; display: inline-block; float: none; height: 49px; top: 1px">
+        <RadzenSidebarToggle style="height: 52px; margin-top: -2px" Click="@SidebarToggle0Click">
+        </RadzenSidebarToggle>
+        <RadzenLabel style="color: #f2f4f5" Text="@L["label0.Text"]">
+        </RadzenLabel>
+      </div>
+      <div class="col-6 text-right" style="background-color: #598087; border-radius: 1px; display: inline-block; float: none; height: 49px; top: 1px; vertical-align: baseline">
+        <RadzenDropDown Data="@(new[] { new { Text="Arabic - Kuwait", Value="ar-KW" },new { Text="English - United States", Value="en-US" },new { Text="French - Canada", Value="fr-CA" }})" style="display: inline-block; height: 39px; margin-top: 1px" TextProperty="Text" @bind-Value="@Culture" ValueProperty="Value" Name="Dropdown1" Change="@Dropdown1Change">
+        </RadzenDropDown>
+        <RadzenProfileMenu style="display: inline-block; float: right; height: 39px; margin-top: 1px; width: 200px" Visible="@(Security.IsAuthenticated())" Click="@Profilemenu0Click" Top="0px">
+          <ChildContent>
+            <RadzenProfileMenuItem Text="@L["profilemenu0.logout.Text"]" Value="Logout" Icon="power_settings_new">
+            </RadzenProfileMenuItem>
+          </ChildContent>
+          <Template>
+            <RadzenLabel Text="@($"{(Security.User?.Name)}")">
+            </RadzenLabel>
+          </Template>
+        </RadzenProfileMenu>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenHeader>
+<RadzenBody @ref="body0">
+  <ChildContent>
+    <RadzenContentContainer Name="main">
+    @Body
+    </RadzenContentContainer>
+  </ChildContent>
+</RadzenBody>
+<RadzenSidebar @ref="sidebar0">
+  <ChildContent>
+    <RadzenPanelMenu style="border-radius: 1px; height: 100%">
+      <ChildContent>
+        <RadzenPanelMenuItem Icon="add_task" Path="i-help-desk-tickets" Text="@L["panelmenu0.i-help-desk-tickets.Text"]">
+        </RadzenPanelMenuItem>
+        <RadzenPanelMenuItem Icon="home" Path="icpdhelpdesk" Text="@L["panelmenu0.icpdhelpdesk.Text"]">
+        </RadzenPanelMenuItem>
+        <RadzenPanelMenuItem Icon="admin_panel_settings" Path="services-lists" Text="@L["panelmenu0.services-lists.Text"]" Visible="@Security.IsInRole(new string[]{"Authenticated"})">
+        </RadzenPanelMenuItem>
+        <RadzenPanelMenuItem Path="i-help-desk-ticketmasterdetails" Text="@L["panelmenu0.i-help-desk-ticketmasterdetails.Text"]" Visible="@Security.IsInRole(new string[]{"Authenticated"})">
+        </RadzenPanelMenuItem>
+        <RadzenPanelMenuItem Path="i-help-desk-ticketmasterdetailsperuser" Text="@L["panelmenu0.i-help-desk-ticketmasterdetailsperuser.Text"]" Visible="@Security.IsInRole(new string[]{"Authenticated"})">
+        </RadzenPanelMenuItem>
+      </ChildContent>
+    </RadzenPanelMenu>
+  </ChildContent>
+</RadzenSidebar>
+<RadzenFooter>
+  <ChildContent>
+    <RadzenLabel Text="@L["footerText.Text"]">
+    </RadzenLabel>
+  </ChildContent>
+</RadzenFooter>

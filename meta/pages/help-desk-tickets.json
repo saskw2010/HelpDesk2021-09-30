@@ -1,0 +1,401 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "heading",
+          "name": "pageTitle",
+          "size": "H1",
+          "text": "Help Desk Tickets"
+        },
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "icon": "add_circle_outline",
+                  "name": "button0",
+                  "style": {
+                    "marginBottom": "10px"
+                  },
+                  "text": "Add",
+                  "type": "button",
+                  "events": {
+                    "click": [
+                      {
+                        "path": "add-help-desk-ticket",
+                        "type": "navigate",
+                        "then": []
+                      }
+                    ]
+                  }
+                },
+                {
+                  "events": {
+                    "click": [
+                      {
+                        "condition": "${event?.Value == \"csv\"}",
+                        "fileName": "Help Desk Tickets",
+                        "name": "authenticationconn.getHelpDeskTickets",
+                        "parameters": [
+                          {
+                            "name": "$filter",
+                            "value": "${grid0.Query.Filter}"
+                          },
+                          {
+                            "name": "$orderby",
+                            "value": "${grid0.Query.OrderBy}"
+                          },
+                          {
+                            "name": "$expand",
+                            "value": "HelpDeskStatus,LocationList,ServiceCatglist,ServicesList"
+                          },
+                          {
+                            "name": "$select",
+                            "value": "Id,TicketGUID,HelpDeskStatus.TicketStatusDesc,TicketDate,TicketDescription,TicketRequesterUser,TicketRequesterEmail,LocationList.locationDesc,ServiceCatglist.ServiceCatgDesc,ServicesList.ServiceDesc,assignTo,AuditCC"
+                          }
+                        ],
+                        "type": "export"
+                      },
+                      {
+                        "condition": "${event == null || event.Value == \"xlsx\"}",
+                        "fileName": "Help Desk Tickets",
+                        "format": "xlsx",
+                        "name": "authenticationconn.getHelpDeskTickets",
+                        "parameters": [
+                          {
+                            "name": "$filter",
+                            "value": "${grid0.Query.Filter}"
+                          },
+                          {
+                            "name": "$orderby",
+                            "value": "${grid0.Query.OrderBy}"
+                          },
+                          {
+                            "name": "$expand",
+                            "value": "HelpDeskStatus,LocationList,ServiceCatglist,ServicesList"
+                          },
+                          {
+                            "name": "$select",
+                            "value": "Id,TicketGUID,HelpDeskStatus.TicketStatusDesc,TicketDate,TicketDescription,TicketRequesterUser,TicketRequesterEmail,LocationList.locationDesc,ServiceCatglist.ServiceCatgDesc,ServicesList.ServiceDesc,assignTo,AuditCC"
+                          }
+                        ],
+                        "type": "export"
+                      }
+                    ]
+                  },
+                  "icon": "get_app",
+                  "items": [
+                    {
+                      "icon": "",
+                      "text": "Excel",
+                      "value": "xlsx"
+                    },
+                    {
+                      "icon": "",
+                      "text": "CSV",
+                      "value": "csv"
+                    }
+                  ],
+                  "name": "splitbutton0",
+                  "style": {
+                    "marginLeft": "10px",
+                    "marginBottom": "10px"
+                  },
+                  "text": "Export",
+                  "type": "splitbutton"
+                },
+                {
+                  "attributes": [
+                    {
+                      "name": "@oninput",
+                      "value": "@(async(args) => {search = $\"{args.Value}\";await grid0.GoToPage(0);await grid0.Reload();})"
+                    }
+                  ],
+                  "name": "textbox0",
+                  "placeholder": "Search ...",
+                  "style": {
+                    "display": "block",
+                    "marginBottom": "10px",
+                    "width": "100%"
+                  },
+                  "type": "textbox",
+                  "value": ""
+                },
+                {
+                  "name": "grid0",
+                  "allowFiltering": true,
+                  "filterMode": "advanced",
+                  "allowPaging": true,
+                  "allowSorting": true,
+                  "data": "${getHelpDeskTicketsResult}",
+                  "events": {
+                    "loadData": [
+                      {
+                        "name": "authenticationconn.getHelpDeskTickets",
+                        "parameters": [
+                          {
+                            "name": "$top",
+                            "value": "event.top"
+                          },
+                          {
+                            "name": "$skip",
+                            "value": "event.skip"
+                          },
+                          {
+                            "name": "$count",
+                            "value": "event.top != null && event.skip != null"
+                          },
+                          {
+                            "name": "$filter",
+                            "value": [
+                              {
+                                "filters": [
+                                  {
+                                    "operation": "contains",
+                                    "property": "TicketGUID",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "TicketStatus",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "TicketDescription",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "TicketRequesterUser",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "TicketRequesterEmail",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "assignTo",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  },
+                                  {
+                                    "operation": "contains",
+                                    "property": "AuditCC",
+                                    "type": "string",
+                                    "value": "\"${search}\""
+                                  }
+                                ],
+                                "operator": "or"
+                              },
+                              {
+                                "value": "${(string.IsNullOrEmpty(event.filter)? \"true\" : event.filter)}"
+                              }
+                            ],
+                            "operator": "and"
+                          },
+                          {
+                            "name": "$orderby",
+                            "value": "${event.orderby}"
+                          },
+                          {
+                            "name": "$expand",
+                            "value": "HelpDeskStatus,LocationList,ServiceCatglist,ServicesList"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "name": "getHelpDeskTicketsResult",
+                            "type": "set",
+                            "value": "${result.Value.AsODataEnumerable()}",
+                            "valueType": "IEnumerable<Testauth.Models.Authenticationconn.HelpDeskTicket>"
+                          },
+                          {
+                            "name": "getHelpDeskTicketsCount",
+                            "type": "set",
+                            "value": "${result.Count}",
+                            "valueType": "int"
+                          }
+                        ],
+                        "type": "invoke",
+                        "error": [
+                          {
+                            "detail": "Unable to load HelpDeskTickets",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ]
+                      }
+                    ],
+                    "rowSelect": [
+                      {
+                        "parameters": [
+                          {
+                            "name": "Id",
+                            "value": "${event.Id}"
+                          }
+                        ],
+                        "path": "edit-help-desk-ticket",
+                        "type": "navigate",
+                        "then": []
+                      }
+                    ]
+                  },
+                  "title": "",
+                  "columns": [
+                    {
+                      "property": "Id",
+                      "title": "Id"
+                    },
+                    {
+                      "property": "TicketGUID",
+                      "title": "Ticket GUID"
+                    },
+                    {
+                      "property": "TicketStatus",
+                      "sortProperty": "HelpDeskStatus.TicketStatusDesc",
+                      "filterProperty": "HelpDeskStatus.TicketStatusDesc",
+                      "template": "${data.HelpDeskStatus?.TicketStatusDesc}",
+                      "title": "Help Desk Status"
+                    },
+                    {
+                      "property": "TicketDate",
+                      "formatString": "{0:dd/MM/yyyy}",
+                      "title": "Ticket Date"
+                    },
+                    {
+                      "property": "TicketDescription",
+                      "title": "Ticket Description"
+                    },
+                    {
+                      "property": "TicketRequesterUser",
+                      "title": "Ticket Requester User"
+                    },
+                    {
+                      "property": "TicketRequesterEmail",
+                      "title": "Ticket Requester Email"
+                    },
+                    {
+                      "property": "locationID",
+                      "sortProperty": "LocationList.locationDesc",
+                      "filterProperty": "LocationList.locationDesc",
+                      "template": "${data.LocationList?.locationDesc}",
+                      "title": "Location List"
+                    },
+                    {
+                      "property": "ServiceCatgID",
+                      "sortProperty": "ServiceCatglist.ServiceCatgDesc",
+                      "filterProperty": "ServiceCatglist.ServiceCatgDesc",
+                      "template": "${data.ServiceCatglist?.ServiceCatgDesc}",
+                      "title": "Service Catglist"
+                    },
+                    {
+                      "property": "ServiceID",
+                      "sortProperty": "ServicesList.ServiceDesc",
+                      "filterProperty": "ServicesList.ServiceDesc",
+                      "template": "${data.ServicesList?.ServiceDesc}",
+                      "title": "Services List"
+                    },
+                    {
+                      "property": "assignTo",
+                      "title": "Assign To"
+                    },
+                    {
+                      "property": "AuditCC",
+                      "title": "Audit CC"
+                    },
+                    {
+                      "filterable": false,
+                      "sortable": false,
+                      "width": "70px",
+                      "textAlign": "center",
+                      "template": [
+                        {
+                          "attributes": [
+                            {
+                              "name": "@onclick:stopPropagation",
+                              "value": true
+                            }
+                          ],
+                          "buttonStyle": "danger",
+                          "icon": "close",
+                          "name": "gridDeleteButton",
+                          "text": "",
+                          "size": "sm",
+                          "type": "button",
+                          "events": {
+                            "click": [
+                              {
+                                "condition": "await DialogService.Confirm(\"Are you sure you want to delete this record?\") == true",
+                                "error": [
+                                  {
+                                    "detail": "Unable to delete HelpDeskTicket",
+                                    "severity": "error",
+                                    "summary": "Error",
+                                    "type": "notify"
+                                  }
+                                ],
+                                "name": "authenticationconn.deleteHelpDeskTicket",
+                                "parameters": [
+                                  {
+                                    "name": "Id",
+                                    "value": "${data.Id}"
+                                  }
+                                ],
+                                "then": [
+                                  {
+                                    "code": "await grid0.Reload();",
+                                    "condition": "result != null",
+                                    "type": "execute"
+                                  }
+                                ],
+                                "type": "invoke"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "type": "datagrid",
+                  "count": "${getHelpDeskTicketsCount}",
+                  "itemType": "Testauth.Models.Authenticationconn.HelpDeskTicket"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "condition": "string.IsNullOrEmpty(search)",
+        "name": "search",
+        "type": "set",
+        "value": "\"\"",
+        "valueType": "string"
+      }
+    ]
+  },
+  "name": "Help Desk Tickets",
+  "access": [
+    "Authenticated"
+  ],
+  "layout": "Main"
+}

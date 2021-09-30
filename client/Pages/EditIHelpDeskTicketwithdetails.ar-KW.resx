@@ -1,0 +1,132 @@
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="pageTitle.Text" xml:space="preserve">
+    <value>Edit I Help Desk Ticketwithdetails</value>
+  </data>
+  <data name="closeLabel.Text" xml:space="preserve">
+    <value>Item no longer available.</value>
+  </data>
+  <data name="closeButton.Text" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="label0.Text" xml:space="preserve">
+    <value>Another user has made conflicting changes to one or more of the fields you have modified. Please reload.</value>
+  </data>
+  <data name="button0.Text" xml:space="preserve">
+    <value>Reload</value>
+  </data>
+  <data name="TicketGUIDLabel.Text" xml:space="preserve">
+    <value>Ticket Guid</value>
+  </data>
+  <data name="TicketStatusLabel.Text" xml:space="preserve">
+    <value>Help Desk Status</value>
+  </data>
+  <data name="TicketStatus.Placeholder" xml:space="preserve">
+    <value>Choose HelpDeskStatus</value>
+  </data>
+  <data name="TicketDateLabel.Text" xml:space="preserve">
+    <value>Ticket Date</value>
+  </data>
+  <data name="TicketDescriptionLabel.Text" xml:space="preserve">
+    <value>Ticket Description</value>
+  </data>
+  <data name="TicketDescriptionRequiredValidator.Text" xml:space="preserve">
+    <value>TicketDescription is required</value>
+  </data>
+  <data name="TicketRequesterUserLabel.Text" xml:space="preserve">
+    <value>Ticket Requester User</value>
+  </data>
+  <data name="TicketRequesterEmailLabel.Text" xml:space="preserve">
+    <value>Ticket Requester Email</value>
+  </data>
+  <data name="TicketRequesterEmailRequiredValidator.Text" xml:space="preserve">
+    <value>TicketRequesterEmail is required</value>
+  </data>
+  <data name="locationIDLabel.Text" xml:space="preserve">
+    <value>Location List</value>
+  </data>
+  <data name="locationID.Placeholder" xml:space="preserve">
+    <value>Choose LocationList</value>
+  </data>
+  <data name="ServiceCatgIDLabel.Text" xml:space="preserve">
+    <value>Service Catglist</value>
+  </data>
+  <data name="ServiceCatgID.Placeholder" xml:space="preserve">
+    <value>Choose ServiceCatglist</value>
+  </data>
+  <data name="ServiceIDLabel.Text" xml:space="preserve">
+    <value>Services List</value>
+  </data>
+  <data name="ServiceID.Placeholder" xml:space="preserve">
+    <value>Choose ServicesList</value>
+  </data>
+  <data name="assignToLabel.Text" xml:space="preserve">
+    <value>Assign To</value>
+  </data>
+  <data name="AuditCCLabel.Text" xml:space="preserve">
+    <value>Audit Cc</value>
+  </data>
+  <data name="button3.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="button1.Text" xml:space="preserve">
+    <value>Post</value>
+  </data>
+</root>

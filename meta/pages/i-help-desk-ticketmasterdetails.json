@@ -1,0 +1,259 @@
+{
+  "access": "Authenticated",
+  "components": [
+    {
+      "components": [
+        {
+          "name": "pageTitle",
+          "size": "H1",
+          "text": "IHelpDeskTicketmasterdetails",
+          "type": "heading"
+        },
+        {
+          "components": [
+            {
+              "class": "col-md-12",
+              "components": [
+                {
+                  "attributes": [
+                    {
+                      "name": "@oninput",
+                      "value": "@(async(args) => {search = $\"{args.Value}\";await grid0.GoToPage(0);await grid0.Reload();})"
+                    }
+                  ],
+                  "name": "textbox0",
+                  "placeholder": "Search ...",
+                  "style": {
+                    "display": "block",
+                    "marginBottom": "10px",
+                    "width": "100%"
+                  },
+                  "type": "textbox",
+                  "value": ""
+                },
+                {
+                  "allowFiltering": false,
+                  "allowGrouping": false,
+                  "allowPaging": true,
+                  "allowSorting": true,
+                  "allowVirtualization": false,
+                  "columns": [
+                    {
+                      "property": "TicketDescription",
+                      "title": "Ticket Description"
+                    },
+                    {
+                      "filterProperty": "HelpDeskStatus.TicketStatusDesc",
+                      "groupProperty": "HelpDeskStatus.TicketStatusDesc",
+                      "property": "TicketStatus",
+                      "sortProperty": "HelpDeskStatus.TicketStatusDesc",
+                      "template": "${data.HelpDeskStatus?.TicketStatusDesc}",
+                      "title": "Help Desk Status"
+                    },
+                    {
+                      "formatString": "{0:d}",
+                      "property": "TicketDate",
+                      "title": "Ticket Date"
+                    },
+                    {
+                      "filterProperty": "LocationList.locationDesc",
+                      "groupProperty": "LocationList.locationDesc",
+                      "property": "locationID",
+                      "sortProperty": "LocationList.locationDesc",
+                      "template": "${data.LocationList?.locationDesc}",
+                      "title": "Location List"
+                    },
+                    {
+                      "filterProperty": "ServiceCatglist.ServiceCatgDesc",
+                      "groupProperty": "ServiceCatglist.ServiceCatgDesc",
+                      "property": "ServiceCatgID",
+                      "sortProperty": "ServiceCatglist.ServiceCatgDesc",
+                      "template": "${data.ServiceCatglist?.ServiceCatgDesc}",
+                      "title": "Service Catglist"
+                    },
+                    {
+                      "filterProperty": "ServicesList.ServiceDesc",
+                      "groupProperty": "ServicesList.ServiceDesc",
+                      "property": "ServiceID",
+                      "sortProperty": "ServicesList.ServiceDesc",
+                      "template": "${data.ServicesList?.ServiceDesc}",
+                      "title": "Services List"
+                    },
+                    {
+                      "property": "Id",
+                      "title": "Id"
+                    },
+                    {
+                      "property": "TicketRequesterEmail",
+                      "title": "Ticket Requester Email"
+                    },
+                    {
+                      "property": "TicketRequesterUser",
+                      "title": "Ticket Requester User"
+                    }
+                  ],
+                  "count": "${getHelpDeskTicketsCount}",
+                  "data": "${getHelpDeskTicketsResult}",
+                  "events": {
+                    "loadData": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to load HelpDeskTickets",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "authenticationconn.getHelpDeskTickets",
+                        "parameters": [
+                          {
+                            "name": "$top",
+                            "value": "event.top"
+                          },
+                          {
+                            "name": "$skip",
+                            "value": "event.skip"
+                          },
+                          {
+                            "name": "$count",
+                            "value": "event.top != null && event.skip != null"
+                          },
+                          {
+                            "name": "$orderby",
+                            "value": "${event.orderby}"
+                          },
+                          {
+                            "name": "$expand",
+                            "value": "HelpDeskStatus,LocationList,ServiceCatglist,ServicesList"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "name": "getHelpDeskTicketsResult",
+                            "type": "set",
+                            "value": "${result.Value.AsODataEnumerable()}",
+                            "valueType": "IEnumerable<Testauth.Models.Authenticationconn.HelpDeskTicket>"
+                          },
+                          {
+                            "name": "getHelpDeskTicketsCount",
+                            "type": "set",
+                            "value": "${result.Count}",
+                            "valueType": "int"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ],
+                    "rowExpand": [
+                      {
+                        "name": "master",
+                        "type": "set",
+                        "value": "${event}"
+                      },
+                      {
+                        "name": "authenticationconn.getHelpDeskTicketDetails",
+                        "parameters": [
+                          {
+                            "name": "$filter",
+                            "value": "HelpDeskTicketId eq ${event.Id}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "code": "event.HelpDeskTicketDetails = ${result}.Value",
+                            "condition": "",
+                            "type": "execute"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "expandMode": "multiple",
+                  "filterMode": "advanced",
+                  "itemType": "Testauth.Models.Authenticationconn.HelpDeskTicket",
+                  "name": "grid0",
+                  "selectionMode": "DataGridSelectionMode.Multiple",
+                  "template": [
+                    {
+                      "allowFiltering": false,
+                      "allowPaging": true,
+                      "allowSorting": true,
+                      "columnWidth": "auto",
+                      "columns": [
+                        {
+                          "filterTemplate": "",
+                          "formatString": "{0:d}",
+                          "frozen": false,
+                          "groupable": false,
+                          "property": "TicketDetailDate",
+                          "reorderable": false,
+                          "resizable": true,
+                          "title": "Ticket Detail Date",
+                          "width": "90px"
+                        },
+                        {
+                          "editTemplate": "",
+                          "property": "TicketDescription",
+                          "template": [
+                            {
+                              "disabled": true,
+                              "name": "htmlEditor0",
+                              "style": {
+                                "height": "289px"
+                              },
+                              "tools": [
+                                {
+                                  "type": "Bold"
+                                }
+                              ],
+                              "type": "html-editor",
+                              "uploadUrl": "upload/image",
+                              "value": "${data.TicketDescription}"
+                            }
+                          ],
+                          "title": "Ticket Description"
+                        }
+                      ],
+                      "count": "",
+                      "data": "${data.HelpDeskTicketDetails}",
+                      "events": {},
+                      "filterMode": "advanced",
+                      "itemType": "Testauth.Models.Authenticationconn.HelpDeskTicketDetail",
+                      "name": "grid1",
+                      "style": {
+                        "height": "754px"
+                      },
+                      "type": "datagrid"
+                    }
+                  ],
+                  "title": "",
+                  "type": "datagrid",
+                  "value": ""
+                }
+              ],
+              "type": "col"
+            }
+          ],
+          "type": "row"
+        }
+      ],
+      "container": "main",
+      "type": "content"
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "condition": "string.IsNullOrEmpty(search)",
+        "name": "search",
+        "type": "set",
+        "value": "\"\"",
+        "valueType": "string"
+      }
+    ]
+  },
+  "layout": "Main",
+  "name": "IHelpDeskTicketmasterdetails"
+}

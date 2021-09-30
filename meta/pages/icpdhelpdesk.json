@@ -1,0 +1,116 @@
+{
+  "access": [
+    "Authenticated"
+  ],
+  "components": [
+    {
+      "components": [
+        {
+          "name": "pageTitle",
+          "size": "H1",
+          "style": {
+            "backgroundColor": "#5d717b",
+            "textAlign": "center"
+          },
+          "text": "CPD HELP DESK",
+          "type": "heading"
+        },
+        {
+          "components": [
+            {
+              "buttonStyle": "info",
+              "buttonType": "submit",
+              "events": {
+                "click": [
+                  {
+                    "path": "services-lists",
+                    "type": "navigate"
+                  }
+                ]
+              },
+              "icon": "sticky_note_2",
+              "name": "button2",
+              "style": {
+                "borderRadius": "4px",
+                "display": "inline-block",
+                "float": "left",
+                "height": "93px",
+                "position": "relative",
+                "textAlign": "center",
+                "top": "1px",
+                "visibility": "visible",
+                "width": "290px"
+              },
+              "template": "",
+              "text": "Admininstrator",
+              "type": "button"
+            }
+          ],
+          "name": "card0",
+          "style": {
+            "backgroundColor": "#5d717b",
+            "display": "inline-block",
+            "float": "left",
+            "height": "206px",
+            "marginLeft": "16px",
+            "marginTop": "16px",
+            "position": "relative",
+            "textAlign": "center",
+            "verticalAlign": "middle",
+            "width": "333px"
+          },
+          "type": "card",
+          "visible": true
+        },
+        {
+          "components": [
+            {
+              "buttonStyle": "success",
+              "buttonType": "submit",
+              "events": {
+                "click": [
+                  {
+                    "code": "UriHelper.NavigateTo(\"i-add-new-ticket\",true);",
+                    "type": "execute"
+                  }
+                ]
+              },
+              "icon": "new_releases",
+              "name": "button1",
+              "style": {
+                "display": "inline-block",
+                "float": "left",
+                "height": "93px",
+                "position": "relative",
+                "textAlign": "center",
+                "top": "2px",
+                "width": "290px"
+              },
+              "template": "",
+              "text": "New Ticket",
+              "type": "button"
+            }
+          ],
+          "name": "card1",
+          "style": {
+            "backgroundColor": "#5d717b",
+            "float": "left",
+            "height": "206px",
+            "marginLeft": "26px",
+            "marginTop": "16px",
+            "position": "relative",
+            "textAlign": "center",
+            "verticalAlign": "middle",
+            "width": "333px"
+          },
+          "type": "card",
+          "visible": true
+        }
+      ],
+      "container": "main",
+      "type": "content"
+    }
+  ],
+  "layout": "widelayout",
+  "name": "ICPDHELPDESK"
+}

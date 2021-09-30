@@ -1,0 +1,96 @@
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="panelmenu0.i-help-desk-ticketmasterdetailsperuser.Text" xml:space="preserve">
+    <value>Item 4</value>
+  </data>
+  <data name="panelmenu0.item4.Text" xml:space="preserve">
+    <value>Item 4</value>
+  </data>
+  <data name="panelmenu0.i-help-desk-ticketmasterdetails.Text" xml:space="preserve">
+    <value>Item 3</value>
+  </data>
+  <data name="panelmenu0.item3.Text" xml:space="preserve">
+    <value>Item 3</value>
+  </data>
+  <data name="label0.Text" xml:space="preserve">
+    <value>CPD HELP DESK</value>
+  </data>
+  <data name="profilemenu0.logout.Text" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>@(Security.User?.Name)</value>
+  </data>
+  <data name="panelmenu0.i-help-desk-tickets.Text" xml:space="preserve">
+    <value>My Tickets</value>
+  </data>
+  <data name="panelmenu0.icpdhelpdesk.Text" xml:space="preserve">
+    <value>My Home </value>
+  </data>
+  <data name="panelmenu0.services-lists.Text" xml:space="preserve">
+    <value>administrator</value>
+  </data>
+  <data name="panelmenu0.help-desk-ticket-detailmos.Text" xml:space="preserve">
+    <value>helpdetailsmos</value>
+  </data>
+  <data name="footerText.Text" xml:space="preserve">
+    <value>testauth, Copyright Ⓒ 2021</value>
+  </data>
+</root>

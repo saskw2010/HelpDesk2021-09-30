@@ -1,0 +1,218 @@
+{
+  "components": [
+    {
+      "components": [
+        {
+          "class": "justify-content-start align-items-center",
+          "components": [
+            {
+              "class": "col-6 d-flex align-items-center",
+              "components": [
+                {
+                  "events": {
+                    "click": [
+                      {
+                        "code": "await InvokeAsync(() => { sidebar0.Toggle(); });",
+                        "type": "execute"
+                      },
+                      {
+                        "code": "await InvokeAsync(() => { body0.Toggle(); });",
+                        "type": "execute"
+                      }
+                    ]
+                  },
+                  "name": "sidebar-toggle0",
+                  "type": "sidebar-toggle"
+                },
+                {
+                  "name": "label0",
+                  "text": "testauth",
+                  "type": "label"
+                }
+              ],
+              "name": "leftCol",
+              "type": "col"
+            },
+            {
+              "class": "col-6 text-right",
+              "components": [
+                {
+                  "data": "@(new[] { new { Text=\"Arabic - Kuwait\", Value=\"ar-KW\" },new { Text=\"English - United States\", Value=\"en-US\" },new { Text=\"French - Canada\", Value=\"fr-CA\" }})",
+                  "events": {
+                    "change": [
+                      {
+                        "code": "var redirect = new Uri(UriHelper.Uri).GetComponents(UriComponents.PathAndQuery | UriComponents.Fragment, UriFormat.UriEscaped);",
+                        "type": "execute"
+                      },
+                      {
+                        "code": "var query = $\"?culture={Uri.EscapeDataString((string)args)}&redirectUri={redirect}\";",
+                        "type": "execute"
+                      },
+                      {
+                        "code": "UriHelper.NavigateTo(\"Culture/SetCulture\" + query, forceLoad: true);",
+                        "type": "execute"
+                      }
+                    ]
+                  },
+                  "textProperty": "Text",
+                  "type": "dropdown",
+                  "value": "${Culture}",
+                  "valueProperty": "Value",
+                  "valueType": "string"
+                },
+                {
+                  "name": "profilemenu0",
+                  "template": [
+                    {
+                      "text": "${Security.User?.Name}",
+                      "type": "label"
+                    }
+                  ],
+                  "type": "profilemenu",
+                  "visible": "${Security.IsAuthenticated()}"
+                }
+              ],
+              "name": "rightCol",
+              "type": "col"
+            }
+          ],
+          "name": "headerRow",
+          "type": "row"
+        }
+      ],
+      "name": "header0",
+      "type": "header"
+    },
+    {
+      "components": [
+        {
+          "name": "main",
+          "type": "content-container"
+        }
+      ],
+      "name": "body0",
+      "type": "body"
+    },
+    {
+      "components": [
+        {
+          "items": [
+            {
+              "icon": "home",
+              "path": "icpdhelpdesk",
+              "text": "My Home",
+              "visible": true
+            },
+            {
+              "path": "help-desk-tickets",
+              "text": "Help Desk Tickets",
+              "visible": true
+            },
+            {
+              "path": "help-desk-ticket-details",
+              "text": "Help Desk Ticket Details",
+              "visible": true
+            },
+            {
+              "path": "i-help-desk-tickets",
+              "text": "IHelp Desk Tickets",
+              "visible": true
+            },
+            {
+              "icon": "add_task",
+              "path": "i-add-new-ticket",
+              "text": "IAddNewTicket",
+              "visible": true
+            },
+            {
+              "path": "i-help-desk-ticketwithdetails",
+              "text": "HelpDeskTicketwithdetails",
+              "visible": true
+            },
+            {
+              "path": "help-desk-ticketherarchy",
+              "text": "herarchy"
+            },
+            {
+              "path": "help-desk-ticketwithform",
+              "text": "helpdeskticketform",
+              "visible": true
+            },
+            {
+              "path": "ticket-requester-users-lists",
+              "text": "Ticket Requester Users Lists",
+              "visible": true
+            },
+            {
+              "path": "help-desk-ticket-detailmos",
+              "text": "helpdetailsmos"
+            },
+            {
+              "items": [
+                {
+                  "path": "service-catglists",
+                  "text": "Service Catglists"
+                },
+                {
+                  "path": "services-lists",
+                  "text": "Services Lists"
+                },
+                {
+                  "path": "location-lists",
+                  "text": "Location Lists"
+                },
+                {
+                  "path": "device-codes",
+                  "text": "Device Codes list"
+                },
+                {
+                  "path": "persisted-grants",
+                  "text": "Persisted Grants"
+                },
+                {
+                  "path": "help-desk-statuses",
+                  "text": "Help Desk Statuses"
+                }
+              ],
+              "text": "Admin-lists"
+            }
+          ],
+          "name": "panelmenu0",
+          "style": {
+            "display": "block",
+            "height": "100%"
+          },
+          "type": "panelmenu"
+        }
+      ],
+      "name": "sidebar0",
+      "type": "sidebar"
+    },
+    {
+      "components": [
+        {
+          "name": "footerText",
+          "text": "testauth, Copyright Ⓒ 2021",
+          "type": "label"
+        }
+      ],
+      "name": "footer0",
+      "type": "footer"
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "Culture",
+        "type": "set",
+        "value": "\"\"",
+        "valueType": "string"
+      },
+      {
+        "code": "Culture = await JSRuntime.InvokeAsync<string>(\"Radzen.getCulture\");",
+        "type": "execute"
+      }
+    ]
+  },
+  "name": "Main"
+}

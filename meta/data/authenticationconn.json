@@ -1,0 +1,1894 @@
+{
+  "info": {
+    "title": "authenticationconn",
+    "x-type": "odata",
+    "x-connector": "mssql",
+    "x-connector-version": 15,
+    "x-concurrency": true
+  },
+  "definitions": {
+    "DeviceCode": {
+      "x-table": "dbo.DeviceCodes",
+      "resource": "DeviceCodes",
+      "required": [
+        "UserCode",
+        "DeviceCode1",
+        "ClientId",
+        "CreationTime",
+        "Expiration",
+        "Data"
+      ],
+      "properties": {
+        "UserCode": {
+          "x-key": true,
+          "x-nullable": false,
+          "type": "string",
+          "length": 200
+        },
+        "DeviceCode1": {
+          "x-original-name": "DeviceCode",
+          "x-nullable": false,
+          "type": "string",
+          "length": 200
+        },
+        "SubjectId": {
+          "type": "string",
+          "length": 200
+        },
+        "ClientId": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 200
+        },
+        "CreationTime": {
+          "x-nullable": false,
+          "type": "string",
+          "format": "date-time",
+          "x-datetime": "datetime2"
+        },
+        "Expiration": {
+          "x-nullable": false,
+          "type": "string",
+          "format": "date-time",
+          "x-datetime": "datetime2"
+        },
+        "Data": {
+          "x-nullable": false,
+          "type": "string"
+        }
+      }
+    },
+    "HelpDeskStatus": {
+      "x-table": "dbo.HelpDeskStatus",
+      "resource": "HelpDeskStatuses",
+      "required": [
+        "TicketStatus"
+      ],
+      "properties": {
+        "TicketStatus": {
+          "x-key": true,
+          "x-nullable": false,
+          "type": "string",
+          "length": 50,
+          "x-navigation": [
+            {
+              "inversePropertyName": "HelpDeskStatus",
+              "name": "HelpDeskTickets",
+              "type": "HelpDeskTicket"
+            }
+          ]
+        },
+        "TicketStatusDesc": {
+          "type": "string",
+          "length": 150
+        },
+        "HelpDeskTickets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HelpDeskTicket"
+          }
+        }
+      }
+    },
+    "HelpDeskTicket": {
+      "x-table": "dbo.HelpDeskTickets",
+      "resource": "HelpDeskTickets",
+      "required": [
+        "TicketDescription",
+        "TicketRequesterEmail"
+      ],
+      "properties": {
+        "Id": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "x-precision": 19,
+          "type": "integer",
+          "format": "int64",
+          "x-navigation": [
+            {
+              "inversePropertyName": "HelpDeskTicket",
+              "name": "HelpDeskTicketDetails",
+              "type": "HelpDeskTicketDetail"
+            }
+          ]
+        },
+        "TicketGUID": {
+          "x-default-sql": "(newid())",
+          "x-nullable": false,
+          "type": "string",
+          "length": 500
+        },
+        "HelpDeskStatus": {
+          "type": "object",
+          "$ref": "#/definitions/HelpDeskStatus"
+        },
+        "TicketStatus": {
+          "x-default-sql": "(N'New')",
+          "x-nullable": false,
+          "type": "string",
+          "length": 50,
+          "x-foreignKey": {
+            "parentTable": "HelpDeskStatus",
+            "parentEntityType": "HelpDeskStatus",
+            "type": "HelpDeskStatus",
+            "principalKey": "TicketStatus",
+            "name": "HelpDeskStatus",
+            "textProperty": "TicketStatusDesc",
+            "navigationProperty": "HelpDeskTickets"
+          }
+        },
+        "TicketDate": {
+          "x-default-sql": "(getdate())",
+          "x-nullable": false,
+          "type": "string",
+          "format": "date-time",
+          "x-datetime": "datetime"
+        },
+        "TicketDescription": {
+          "x-nullable": false,
+          "type": "string"
+        },
+        "TicketRequesterUser": {
+          "type": "string",
+          "length": 250
+        },
+        "TicketRequesterEmail": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 500
+        },
+        "LocationList": {
+          "type": "object",
+          "$ref": "#/definitions/LocationList"
+        },
+        "locationID": {
+          "x-precision": 19,
+          "type": "integer",
+          "format": "int64",
+          "x-foreignKey": {
+            "parentTable": "locationList",
+            "parentEntityType": "LocationList",
+            "type": "LocationList",
+            "principalKey": "locationID",
+            "name": "LocationList",
+            "textProperty": "locationDesc",
+            "navigationProperty": "HelpDeskTickets"
+          }
+        },
+        "ServiceCatglist": {
+          "type": "object",
+          "$ref": "#/definitions/ServiceCatglist"
+        },
+        "ServiceCatgID": {
+          "x-precision": 19,
+          "type": "integer",
+          "format": "int64",
+          "x-foreignKey": {
+            "parentTable": "ServiceCatglist",
+            "parentEntityType": "ServiceCatglist",
+            "type": "ServiceCatglist",
+            "principalKey": "ServiceCatgID",
+            "name": "ServiceCatglist",
+            "textProperty": "ServiceCatgDesc",
+            "navigationProperty": "HelpDeskTickets"
+          }
+        },
+        "ServicesList": {
+          "type": "object",
+          "$ref": "#/definitions/ServicesList"
+        },
+        "ServiceID": {
+          "x-precision": 19,
+          "type": "integer",
+          "format": "int64",
+          "x-foreignKey": {
+            "parentTable": "ServicesList",
+            "parentEntityType": "ServicesList",
+            "type": "ServicesList",
+            "principalKey": "ServiceID",
+            "name": "ServicesList",
+            "textProperty": "ServiceDesc",
+            "navigationProperty": "HelpDeskTickets"
+          }
+        },
+        "assignTo": {
+          "type": "string",
+          "length": 250
+        },
+        "AuditCC": {
+          "type": "string",
+          "length": 250
+        },
+        "HelpDeskTicketDetails": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HelpDeskTicketDetail"
+          }
+        }
+      }
+    },
+    "HelpDeskTicketDetail": {
+      "x-table": "dbo.HelpDeskTicketDetails",
+      "resource": "HelpDeskTicketDetails",
+      "required": [
+        "HelpDeskTicketId",
+        "TicketDescription"
+      ],
+      "properties": {
+        "Id": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "x-precision": 19,
+          "type": "integer",
+          "format": "int64"
+        },
+        "HelpDeskTicket": {
+          "type": "object",
+          "$ref": "#/definitions/HelpDeskTicket"
+        },
+        "HelpDeskTicketId": {
+          "x-nullable": false,
+          "x-precision": 19,
+          "type": "integer",
+          "format": "int64",
+          "x-foreignKey": {
+            "parentTable": "HelpDeskTickets",
+            "parentEntityType": "HelpDeskTicket",
+            "type": "HelpDeskTicket",
+            "principalKey": "Id",
+            "name": "HelpDeskTicket",
+            "textProperty": "TicketGUID",
+            "navigationProperty": "HelpDeskTicketDetails"
+          }
+        },
+        "TicketDetailDate": {
+          "x-default-sql": "(getdate())",
+          "x-nullable": false,
+          "type": "string",
+          "format": "date-time",
+          "x-datetime": "datetime"
+        },
+        "TicketDescription": {
+          "x-nullable": false,
+          "type": "string"
+        }
+      }
+    },
+    "LocationList": {
+      "x-table": "dbo.locationList",
+      "resource": "LocationLists",
+      "required": [],
+      "properties": {
+        "locationID": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "x-precision": 19,
+          "type": "integer",
+          "format": "int64",
+          "x-navigation": [
+            {
+              "inversePropertyName": "LocationList",
+              "name": "HelpDeskTickets",
+              "type": "HelpDeskTicket"
+            }
+          ]
+        },
+        "locationDesc": {
+          "type": "string",
+          "length": 250
+        },
+        "locationDesc1": {
+          "type": "string",
+          "length": 250
+        },
+        "HelpDeskTickets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HelpDeskTicket"
+          }
+        }
+      }
+    },
+    "PersistedGrant": {
+      "x-table": "dbo.PersistedGrants",
+      "resource": "PersistedGrants",
+      "required": [
+        "Key",
+        "Type",
+        "ClientId",
+        "CreationTime",
+        "Data"
+      ],
+      "properties": {
+        "Key": {
+          "x-key": true,
+          "x-nullable": false,
+          "type": "string",
+          "length": 200
+        },
+        "Type": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 50
+        },
+        "SubjectId": {
+          "type": "string",
+          "length": 200
+        },
+        "ClientId": {
+          "x-nullable": false,
+          "type": "string",
+          "length": 200
+        },
+        "CreationTime": {
+          "x-nullable": false,
+          "type": "string",
+          "format": "date-time",
+          "x-datetime": "datetime2"
+        },
+        "Expiration": {
+          "type": "string",
+          "format": "date-time",
+          "x-datetime": "datetime2"
+        },
+        "Data": {
+          "x-nullable": false,
+          "type": "string"
+        }
+      }
+    },
+    "ServiceCatglist": {
+      "x-table": "dbo.ServiceCatglist",
+      "resource": "ServiceCatglists",
+      "required": [],
+      "properties": {
+        "ServiceCatgID": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "x-precision": 19,
+          "type": "integer",
+          "format": "int64",
+          "x-navigation": [
+            {
+              "inversePropertyName": "ServiceCatglist",
+              "name": "ServicesLists",
+              "type": "ServicesList"
+            },
+            {
+              "inversePropertyName": "ServiceCatglist",
+              "name": "HelpDeskTickets",
+              "type": "HelpDeskTicket"
+            }
+          ]
+        },
+        "ServiceCatgDesc": {
+          "type": "string",
+          "length": 250
+        },
+        "ServiceCatgDesc1": {
+          "type": "string",
+          "length": 250
+        },
+        "ServicesLists": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ServicesList"
+          }
+        },
+        "HelpDeskTickets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HelpDeskTicket"
+          }
+        }
+      }
+    },
+    "ServicesList": {
+      "x-table": "dbo.ServicesList",
+      "resource": "ServicesLists",
+      "required": [
+        "ServiceCatgID"
+      ],
+      "properties": {
+        "ServiceID": {
+          "x-key": true,
+          "x-identity": true,
+          "x-nullable": false,
+          "x-precision": 19,
+          "type": "integer",
+          "format": "int64",
+          "x-navigation": [
+            {
+              "inversePropertyName": "ServicesList",
+              "name": "HelpDeskTickets",
+              "type": "HelpDeskTicket"
+            }
+          ]
+        },
+        "ServiceDesc": {
+          "type": "string",
+          "length": 250
+        },
+        "ServiceDesc1": {
+          "type": "string",
+          "length": 250
+        },
+        "AuditCC": {
+          "type": "string",
+          "length": 250
+        },
+        "assignTo": {
+          "type": "string",
+          "length": 250
+        },
+        "ServiceCatglist": {
+          "type": "object",
+          "$ref": "#/definitions/ServiceCatglist"
+        },
+        "ServiceCatgID": {
+          "x-nullable": false,
+          "x-precision": 19,
+          "type": "integer",
+          "format": "int64",
+          "x-foreignKey": {
+            "parentTable": "ServiceCatglist",
+            "parentEntityType": "ServiceCatglist",
+            "type": "ServiceCatglist",
+            "principalKey": "ServiceCatgID",
+            "name": "ServiceCatglist",
+            "textProperty": "ServiceCatgDesc",
+            "navigationProperty": "ServicesLists"
+          }
+        },
+        "HelpDeskTickets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HelpDeskTicket"
+          }
+        }
+      }
+    },
+    "TicketRequesterUsersList": {
+      "x-table": "dbo.TicketRequesterUsersList",
+      "resource": "TicketRequesterUsersLists",
+      "required": [
+        "TicketRequesterUser"
+      ],
+      "properties": {
+        "TicketRequesterUser": {
+          "x-key": true,
+          "x-nullable": false,
+          "type": "string",
+          "length": 250
+        },
+        "TicketRequesterEmail": {
+          "type": "string",
+          "length": 500
+        }
+      }
+    }
+  },
+  "paths": {
+    "/DeviceCodes": {
+      "get": {
+        "operationId": "getDeviceCodes",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/DeviceCode"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createDeviceCode",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "DeviceCode",
+            "schema": {
+              "$ref": "#/definitions/DeviceCode"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/DeviceCode"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/HelpDeskStatuses": {
+      "get": {
+        "operationId": "getHelpDeskStatuses",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/HelpDeskStatus"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createHelpDeskStatus",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "HelpDeskStatus",
+            "schema": {
+              "$ref": "#/definitions/HelpDeskStatus"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/HelpDeskStatus"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/HelpDeskTickets": {
+      "get": {
+        "operationId": "getHelpDeskTickets",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/HelpDeskTicket"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createHelpDeskTicket",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "HelpDeskTicket",
+            "schema": {
+              "$ref": "#/definitions/HelpDeskTicket"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/HelpDeskTicket"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/HelpDeskTicketDetails": {
+      "get": {
+        "operationId": "getHelpDeskTicketDetails",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/HelpDeskTicketDetail"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createHelpDeskTicketDetail",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "HelpDeskTicketDetail",
+            "schema": {
+              "$ref": "#/definitions/HelpDeskTicketDetail"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/HelpDeskTicketDetail"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/LocationLists": {
+      "get": {
+        "operationId": "getLocationLists",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/LocationList"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createLocationList",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "LocationList",
+            "schema": {
+              "$ref": "#/definitions/LocationList"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/LocationList"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/PersistedGrants": {
+      "get": {
+        "operationId": "getPersistedGrants",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/PersistedGrant"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createPersistedGrant",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "PersistedGrant",
+            "schema": {
+              "$ref": "#/definitions/PersistedGrant"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/PersistedGrant"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/ServiceCatglists": {
+      "get": {
+        "operationId": "getServiceCatglists",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/ServiceCatglist"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createServiceCatglist",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "ServiceCatglist",
+            "schema": {
+              "$ref": "#/definitions/ServiceCatglist"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/ServiceCatglist"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/ServicesLists": {
+      "get": {
+        "operationId": "getServicesLists",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/ServicesList"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createServicesList",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "ServicesList",
+            "schema": {
+              "$ref": "#/definitions/ServicesList"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/ServicesList"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/TicketRequesterUsersLists": {
+      "get": {
+        "operationId": "getTicketRequesterUsersLists",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "$filter",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$orderby",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$expand",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "$top",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$skip",
+            "type": "integer"
+          },
+          {
+            "in": "query",
+            "name": "$count",
+            "type": "boolean"
+          },
+          {
+            "in": "query",
+            "name": "$format",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "properties": {
+                "value": {
+                  "items": {
+                    "$ref": "#/definitions/TicketRequesterUsersList"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createTicketRequesterUsersList",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "TicketRequesterUsersList",
+            "schema": {
+              "$ref": "#/definitions/TicketRequesterUsersList"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/TicketRequesterUsersList"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/DeviceCodes('{UserCode}')": {
+      "delete": {
+        "operationId": "deleteDeviceCode",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "UserCode",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getDeviceCodeByUserCode",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "UserCode",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/DeviceCode"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateDeviceCode",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "UserCode",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "DeviceCode",
+            "schema": {
+              "$ref": "#/definitions/DeviceCode"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/HelpDeskStatuses('{TicketStatus}')": {
+      "delete": {
+        "operationId": "deleteHelpDeskStatus",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "TicketStatus",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getHelpDeskStatusByTicketStatus",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "TicketStatus",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/HelpDeskStatus"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateHelpDeskStatus",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "TicketStatus",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "HelpDeskStatus",
+            "schema": {
+              "$ref": "#/definitions/HelpDeskStatus"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/HelpDeskTickets({Id})": {
+      "delete": {
+        "operationId": "deleteHelpDeskTicket",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getHelpDeskTicketById",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/HelpDeskTicket"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateHelpDeskTicket",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "HelpDeskTicket",
+            "schema": {
+              "$ref": "#/definitions/HelpDeskTicket"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/HelpDeskTicketDetails({Id})": {
+      "delete": {
+        "operationId": "deleteHelpDeskTicketDetail",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getHelpDeskTicketDetailById",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/HelpDeskTicketDetail"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateHelpDeskTicketDetail",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "HelpDeskTicketDetail",
+            "schema": {
+              "$ref": "#/definitions/HelpDeskTicketDetail"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/LocationLists({locationID})": {
+      "delete": {
+        "operationId": "deleteLocationList",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "locationID",
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getLocationListBylocationID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "locationID",
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/LocationList"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateLocationList",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "locationID",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "LocationList",
+            "schema": {
+              "$ref": "#/definitions/LocationList"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/PersistedGrants('{Key}')": {
+      "delete": {
+        "operationId": "deletePersistedGrant",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Key",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getPersistedGrantByKey",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Key",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/PersistedGrant"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updatePersistedGrant",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Key",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "PersistedGrant",
+            "schema": {
+              "$ref": "#/definitions/PersistedGrant"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/ServiceCatglists({ServiceCatgID})": {
+      "delete": {
+        "operationId": "deleteServiceCatglist",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ServiceCatgID",
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getServiceCatglistByServiceCatgID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ServiceCatgID",
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/ServiceCatglist"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateServiceCatglist",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ServiceCatgID",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "ServiceCatglist",
+            "schema": {
+              "$ref": "#/definitions/ServiceCatglist"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/ServicesLists({ServiceID})": {
+      "delete": {
+        "operationId": "deleteServicesList",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ServiceID",
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getServicesListByServiceID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ServiceID",
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/ServicesList"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateServicesList",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ServiceID",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "body",
+            "name": "ServicesList",
+            "schema": {
+              "$ref": "#/definitions/ServicesList"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/TicketRequesterUsersLists('{TicketRequesterUser}')": {
+      "delete": {
+        "operationId": "deleteTicketRequesterUsersList",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "TicketRequesterUser",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getTicketRequesterUsersListByTicketRequesterUser",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "TicketRequesterUser",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/TicketRequesterUsersList"
+            }
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateTicketRequesterUsersList",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "TicketRequesterUser",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "TicketRequesterUsersList",
+            "schema": {
+              "$ref": "#/definitions/TicketRequesterUsersList"
+            }
+          }
+        ],
+        "responses": {
+          "204": {},
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "basePath": "/odata/authenticationconn",
+  "host": "localhost:5001",
+  "schemes": [
+    "https"
+  ]
+}

@@ -1,0 +1,201 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "heading",
+          "name": "pageTitle",
+          "size": "H1",
+          "text": "Add Ticket Requester Users List"
+        },
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Ticket Requester User",
+                              "component": "TicketRequesterUser",
+                              "name": "TicketRequesterUserLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 250,
+                              "type": "textbox",
+                              "name": "TicketRequesterUser",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${ticketrequesteruserslist.TicketRequesterUser}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "TicketRequesterUserRequiredValidator",
+                              "component": "TicketRequesterUser",
+                              "text": "TicketRequesterUser is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Ticket Requester Email",
+                              "component": "TicketRequesterEmail",
+                              "name": "TicketRequesterEmailLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 500,
+                              "type": "textbox",
+                              "name": "TicketRequesterEmail",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${ticketrequesteruserslist.TicketRequesterEmail}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "style": {
+                                "marginLeft": "1rem"
+                              },
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "path": "ticket-requester-users-lists",
+                                    "type": "navigate"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to create new TicketRequesterUsersList!",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "authenticationconn.createTicketRequesterUsersList",
+                        "parameters": [
+                          {
+                            "name": "TicketRequesterUsersList",
+                            "value": "${ticketrequesteruserslist}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "path": "ticket-requester-users-lists",
+                            "type": "navigate"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "data": "${ticketrequesteruserslist}",
+                  "visible": "${ticketrequesteruserslist != null}",
+                  "itemType": "Testauth.Models.Authenticationconn.TicketRequesterUsersList"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "ticketrequesteruserslist",
+        "type": "set",
+        "value": "new Testauth.Models.Authenticationconn.TicketRequesterUsersList(){}",
+        "valueType": "Testauth.Models.Authenticationconn.TicketRequesterUsersList"
+      }
+    ]
+  },
+  "name": "Add Ticket Requester Users List",
+  "access": [
+    "Authenticated"
+  ],
+  "layout": "Main"
+}
