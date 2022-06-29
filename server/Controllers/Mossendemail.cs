@@ -16,7 +16,7 @@ namespace Testauth.Server.Controllers
             client.UseDefaultCredentials = false;
 
 
-            client.Credentials = new System.Net.NetworkCredential("info@wytsky.com", "WytSky@2021");
+            client.Credentials = new System.Net.NetworkCredential("info@wytsky.com", "#########");
 
             var mailMessage = new System.Net.Mail.MailMessage();
             mailMessage.From = new System.Net.Mail.MailAddress("info@wytsky.com");
