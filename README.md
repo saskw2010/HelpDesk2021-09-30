@@ -1,6 +1,6 @@
 # Help Desk2021-09-30
 # Help Desk System 
-      we use Syncfution ,Radzen 
+      We use Syncfution ,Radzen 
 
       ##   Blazor .Net5
       ##   wasem
